@@ -7,31 +7,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.quizapp.accessiblequiz.model.Quiz;
+import com.quizapp.accessiblequiz.repository.QuizRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/quizzes")
 public class QuizController {
 
-    // Simple test endpoint
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Accessible Quiz Platform is up and running 🚀";
+    @Autowired
+    private QuizRepository quizRepository;
+
+    // Get all quizzes
+    @GetMapping
+    public List<Quiz> getAllQuizzes() {
+        return quizRepository.findAll();
     }
 
-    // Placeholder for quizzes
-    @GetMapping("/quizzes")
-    public String getAllQuizzes() {
-        return "This will return all quizzes (coming soon)";
-    }
-    @GetMapping("/quizzes/d{id}")
-    public String getQuizById(@PathVariable Long id){
-        return "This will return quiz with ID: "+ id;
+    // Add a new quiz
+    @PostMapping
+    public Quiz createQuiz(@RequestBody Quiz quiz) {
+        return quizRepository.save(quiz);
     }
 
-    @PostMapping("/quizzes")
-    public String createQuiz(@RequestBody String quiz)
-    {
-        return "New quiz created: "+ quiz;
+    // Get quiz by id
+    @GetMapping("/{id}")
+    public Quiz getQuizById(@PathVariable Long id) {
+        return quizRepository.findById(id).orElse(null);
     }
-    
 }

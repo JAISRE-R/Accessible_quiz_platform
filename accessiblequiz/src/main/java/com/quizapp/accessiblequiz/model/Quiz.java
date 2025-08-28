@@ -1,5 +1,7 @@
 package com.quizapp.accessiblequiz.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,21 @@ public class Quiz {
 
     private String title;
     private String description;
-    private String difficulty;
+   
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    public Quiz()
+    {
+
+    }
+
+    public Quiz(String title, String description)
+    {
+        this.title = title;
+        this.description = description;
+        this.createdAt = LocalDateTime.now();
+    }
 
     // Getters & Setters
     public Long getId() { return id; }
@@ -27,7 +43,13 @@ public class Quiz {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getDifficulty() { return difficulty; }
-    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
+  
+     public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+}
 }
 
